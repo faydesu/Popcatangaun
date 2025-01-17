@@ -29,51 +29,36 @@ function changePopcatImage(imagePath) {
   popcat.src = imagePath;
 }
 
-// Popcat Mouse Down / Touch Start (mousedown หรือ touchstart)
-popcat.addEventListener("mousedown", () => {
+// ฟังก์ชันเริ่มต้นเมื่อเริ่มกด
+function onStart() {
   isMouseDown = true;
   changePopcatImage("cat-clicked.png"); // เปลี่ยนรูปเมื่อกดคลิก
   score++;  // เพิ่มคะแนน
   scoreDisplay.textContent = score; // อัปเดตคะแนน
-});
+}
 
+// ฟังก์ชันเมื่อปล่อยคลิกหรือสัมผัส
+function onEnd() {
+  if (isMouseDown) {
+    isMouseDown = false;
+    changePopcatImage("cat.png"); // กลับเป็นรูปเดิมเมื่อปล่อยคลิก
+  }
+}
+
+// การจับเหตุการณ์คลิกและสัมผัส
+popcat.addEventListener("mousedown", onStart);
 popcat.addEventListener("touchstart", (e) => {
   e.preventDefault();  // ป้องกันการทำงานของเบราว์เซอร์ (เช่นการซูม)
-  isMouseDown = true;
-  changePopcatImage("cat-clicked.png"); // เปลี่ยนรูปเมื่อกดคลิก
-  score++;  // เพิ่มคะแนน
-  scoreDisplay.textContent = score; // อัปเดตคะแนน
+  onStart();
 });
 
-// Popcat Mouse Up / Touch End (mouseup หรือ touchend)
-popcat.addEventListener("mouseup", () => {
-  if (isMouseDown) {
-    isMouseDown = false;
-    changePopcatImage("cat.png"); // กลับเป็นรูปเดิมเมื่อปล่อยคลิก
-  }
-});
+// การจับเหตุการณ์ปล่อยคลิกและสัมผัส
+popcat.addEventListener("mouseup", onEnd);
+popcat.addEventListener("touchend", onEnd);
 
-popcat.addEventListener("touchend", () => {
-  if (isMouseDown) {
-    isMouseDown = false;
-    changePopcatImage("cat.png"); // กลับเป็นรูปเดิมเมื่อปล่อยคลิก
-  }
-});
-
-// Popcat Mouse Leave / Touch Cancel (mouseleave หรือ touchcancel)
-popcat.addEventListener("mouseleave", () => {
-  if (isMouseDown) {
-    isMouseDown = false;
-    changePopcatImage("cat.png"); // กลับเป็นรูปเดิมหากเมาส์ออกจากภาพ
-  }
-});
-
-popcat.addEventListener("touchcancel", () => {
-  if (isMouseDown) {
-    isMouseDown = false;
-    changePopcatImage("cat.png"); // กลับเป็นรูปเดิมหากการสัมผัสถูกยกเลิก
-  }
-});
+// การจับเหตุการณ์ออกจากภาพ
+popcat.addEventListener("mouseleave", onEnd);
+popcat.addEventListener("touchcancel", onEnd);
 
 // Save Score to Firebase
 window.addEventListener("beforeunload", () => {
