@@ -1,16 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Popangaun</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Popangaun</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="script.js"></script>
 </head>
 <body>
-    <div class="game-container">
-        <img id="pop-image" src="pop-image.png" alt="Popangaun">
-        <h1 id="score">0</h1>
+  <div class="container">
+    <h1>Popangaun</h1>
+    <p>สุขสันต์วันเกิดองุ่น</p>
+
+    <div id="game-area">
+      <div class="pop-area">
+        <img src="cat.png" alt="Pop Cat" class="popcat" id="popcat">
+      </div>
+      <div class="score-board">
+        <p>คะแนนของคุณ: <span id="score">0</span></p>
+      </div>
     </div>
-    <script src="script.js"></script>
+  </div>
 </body>
 </html>
