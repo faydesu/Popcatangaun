@@ -11,3 +11,8 @@ popImage.addEventListener('mousedown', () => {
 popImage.addEventListener('mouseup', () => {
     popImage.src = 'pop-image.png'; // กลับไปที่ภาพเดิมเมื่อปล่อย
 });
+
+// ป้องกันกรณีที่คลิกนอกปุ่ม
+document.addEventListener('mouseup', () => {
+    popImage.src = 'pop-image.png';
+});
