@@ -24,17 +24,24 @@ const scoreDisplay = document.getElementById("score");
 let score = 0;
 let isMouseDown = false; // ตัวแปรที่เก็บสถานะการกดคลิก
 
+// ฟังก์ชันเปลี่ยนรูป
+function changePopcatImage(imagePath) {
+  popcat.src = imagePath;
+}
+
 // Popcat Click (mousedown)
 popcat.addEventListener("mousedown", () => {
   isMouseDown = true;
-  popcat.src = "cat-clicked.png"; // เปลี่ยนรูปเมื่อกดคลิก
+  changePopcatImage("cat-clicked.png"); // เปลี่ยนรูปเมื่อกดคลิก
+  score++;  // เพิ่มคะแนน
+  scoreDisplay.textContent = score; // อัปเดตคะแนน
 });
 
 // Popcat Mouse Up (mouseup)
 popcat.addEventListener("mouseup", () => {
   if (isMouseDown) {
     isMouseDown = false;
-    popcat.src = "cat.png"; // กลับเป็นรูปเดิมเมื่อปล่อยคลิก
+    changePopcatImage("cat.png"); // กลับเป็นรูปเดิมเมื่อปล่อยคลิก
   }
 });
 
@@ -42,14 +49,8 @@ popcat.addEventListener("mouseup", () => {
 popcat.addEventListener("mouseleave", () => {
   if (isMouseDown) {
     isMouseDown = false;
-    popcat.src = "cat.png"; // กลับเป็นรูปเดิมหากเมาส์ออกจากภาพ
+    changePopcatImage("cat.png"); // กลับเป็นรูปเดิมหากเมาส์ออกจากภาพ
   }
-});
-
-// เพิ่มคะแนนเมื่อคลิก
-popcat.addEventListener("mousedown", () => {
-  score++;
-  scoreDisplay.textContent = score;
 });
 
 // Save Score to Firebase
