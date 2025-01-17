@@ -29,7 +29,7 @@ function changePopcatImage(imagePath) {
   popcat.src = imagePath;
 }
 
-// Popcat Click (mousedown)
+// Popcat Mouse Down / Touch Start (mousedown หรือ touchstart)
 popcat.addEventListener("mousedown", () => {
   isMouseDown = true;
   changePopcatImage("cat-clicked.png"); // เปลี่ยนรูปเมื่อกดคลิก
@@ -37,7 +37,15 @@ popcat.addEventListener("mousedown", () => {
   scoreDisplay.textContent = score; // อัปเดตคะแนน
 });
 
-// Popcat Mouse Up (mouseup)
+popcat.addEventListener("touchstart", (e) => {
+  e.preventDefault();  // ป้องกันการทำงานของเบราว์เซอร์ (เช่นการซูม)
+  isMouseDown = true;
+  changePopcatImage("cat-clicked.png"); // เปลี่ยนรูปเมื่อกดคลิก
+  score++;  // เพิ่มคะแนน
+  scoreDisplay.textContent = score; // อัปเดตคะแนน
+});
+
+// Popcat Mouse Up / Touch End (mouseup หรือ touchend)
 popcat.addEventListener("mouseup", () => {
   if (isMouseDown) {
     isMouseDown = false;
@@ -45,11 +53,25 @@ popcat.addEventListener("mouseup", () => {
   }
 });
 
-// Popcat Mouse Leave (mouseleave)
+popcat.addEventListener("touchend", () => {
+  if (isMouseDown) {
+    isMouseDown = false;
+    changePopcatImage("cat.png"); // กลับเป็นรูปเดิมเมื่อปล่อยคลิก
+  }
+});
+
+// Popcat Mouse Leave / Touch Cancel (mouseleave หรือ touchcancel)
 popcat.addEventListener("mouseleave", () => {
   if (isMouseDown) {
     isMouseDown = false;
     changePopcatImage("cat.png"); // กลับเป็นรูปเดิมหากเมาส์ออกจากภาพ
+  }
+});
+
+popcat.addEventListener("touchcancel", () => {
+  if (isMouseDown) {
+    isMouseDown = false;
+    changePopcatImage("cat.png"); // กลับเป็นรูปเดิมหากการสัมผัสถูกยกเลิก
   }
 });
 
