@@ -22,14 +22,34 @@ const popcat = document.getElementById("popcat");
 const scoreDisplay = document.getElementById("score");
 
 let score = 0;
+let isMouseDown = false; // ตัวแปรที่เก็บสถานะการกดคลิก
 
-// Popcat Click
+// Popcat Click (mousedown)
 popcat.addEventListener("mousedown", () => {
-  popcat.src = "cat-clicked.png"; // เปลี่ยนรูปเป็น cat-clicked.png เมื่อคลิก
+  isMouseDown = true;
+  popcat.src = "cat-clicked.png"; // เปลี่ยนรูปเมื่อกดคลิก
 });
 
+// Popcat Mouse Up (mouseup)
 popcat.addEventListener("mouseup", () => {
-  popcat.src = "cat.png"; // กลับเป็น cat.png เมื่อปล่อยคลิก
+  if (isMouseDown) {
+    isMouseDown = false;
+    popcat.src = "cat.png"; // กลับเป็นรูปเดิมเมื่อปล่อยคลิก
+  }
+});
+
+// Popcat Mouse Leave (mouseleave)
+popcat.addEventListener("mouseleave", () => {
+  if (isMouseDown) {
+    isMouseDown = false;
+    popcat.src = "cat.png"; // กลับเป็นรูปเดิมหากเมาส์ออกจากภาพ
+  }
+});
+
+// เพิ่มคะแนนเมื่อคลิก
+popcat.addEventListener("mousedown", () => {
+  score++;
+  scoreDisplay.textContent = score;
 });
 
 // Save Score to Firebase
